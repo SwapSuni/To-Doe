@@ -15,8 +15,7 @@ const List = ({ tasks }) => {
     }, [])
 
     const handlelogout = () => {
-        Cookies.remove('user');
-        router.push('/');
+        router.push("/");
     }
 
     const handleadd = () => {
