@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import { useSignInWithEmailAndPassword, useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../firebase.init';
 
-const login = () => {
+const Login = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -118,4 +118,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login
