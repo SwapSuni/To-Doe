@@ -3,6 +3,16 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Head from 'next/head';
 
+export async function getServerSideProps(ctx) {
+    const res = await fetch(`${process.env.BASE_URL}/api/list/${ctx.query.id}`);
+    const data = await res.json();
+    return {
+        props: {
+            tasks: data.details,
+        }
+    }
+}
+
 const List = ({ tasks }) => {
     const [add, setAdd] = useState(false);
     const [title, setTitle] = useState("");
@@ -105,14 +115,14 @@ const List = ({ tasks }) => {
     )
 }
 
-export async function getServerSideProps(ctx) {
-    const res = await fetch(`${process.env.BASE_URL}/api/list/${ctx.query.id}`);
-    const data = await res.json();
-    return {
-        props: {
-            tasks: data.details,
-        }
-    }
-}
+// export async function getServerSideProps(ctx) {
+//     const res = await fetch(`${process.env.BASE_URL}/api/list/${ctx.query.id}`);
+//     const data = await res.json();
+//     return {
+//         props: {
+//             tasks: data.details,
+//         }
+//     }
+// }
 
 export default List
