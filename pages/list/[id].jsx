@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Head from 'next/head';
 
-const ist = ({ tasks }) => {
+const List = ({ tasks }) => {
     const [add, setAdd] = useState(false);
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
@@ -116,4 +116,4 @@ export async function getServerSideProps(ctx) {
     }
 }
 
-export default list
+export default List
