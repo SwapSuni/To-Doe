@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Head from 'next/head';
 
-const list = ({ tasks }) => {
+const ist = ({ tasks }) => {
     const [add, setAdd] = useState(false);
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");

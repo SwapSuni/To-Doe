@@ -1,7 +1,6 @@
 import connectDB from "@/db";
 import User from "@/models/user-model";
 import bcrypt from 'bcrypt';
-import jwt from "jsonwebtoken";
 
 export default async function handler(req, res){
     if(req.method==="POST"){
@@ -23,7 +22,6 @@ export default async function handler(req, res){
         })
 
         const result=await user.save();
-        const token= jwt.sign({token: result._id},process.env.JWT_SECRET, {expiresIn: "20d"});
-        return res.status(200).json({msg:"registered..", token, user: result});
+        return res.status(200).json({msg:"registered..", user: result});
     }
 }
