@@ -13,9 +13,6 @@ const Header1 = () => {
 
   return (
     <>
-    <Head>
-    <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@300&family=Playfair+Display&display=swap" rel="stylesheet"/>
-    </Head>
         <div className=''>
             <div className=''>
                 <h1 className='font-semibold tracking-wide text-5xl text-center pt-6 text-white'>SASHASTRA</h1>

@@ -7,7 +7,9 @@ export default function Document() {
         <link rel='icon' href={'/icon.jfif'}></link>
       </Head>
       <body>
-        <Main />
+        <Main>
+        <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@300&family=Playfair+Display&display=swap" rel="stylesheet"/>
+        </Main>
         <NextScript />
       </body>
     </Html>

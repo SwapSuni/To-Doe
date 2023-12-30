@@ -5,9 +5,6 @@ const Body = () => {
 
     return (
         <>
-        <Head>
-        <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@300&family=Playfair+Display&display=swap" rel="stylesheet"/>
-        </Head>
             <div className='flex items-center w-full h-3/4 text-slate-300 justify-center'>
                 <div className='h-full w-3/6 border-2 mx-16 my-5 rounded-lg border-none'>
                     <div className='my-3 mx-5'>
