@@ -5,11 +5,22 @@ export default async function handler(req, res){
     if(req.method==="GET"){
         connectDB();
         if(req.query.id){
+            console.log(req.query.id);
             const user= await userModel.findById(req.query.id);
             const list= user.tasks;
-            return res.status(400).json({msg:"List is here..", details: list});
+            console.log(list);
+            // return res.status(400).json({msg:"List is here..", details: list});
+            res.send(list);
         }
     }
+    // if(req.method==="GET"){
+    //     connectDB();
+    //     if(req.query.id){
+    //         const user= await userModel.findById(req.query.id);
+    //         const list= user.tasks;
+    //         return res.status(400).json({msg:"List is here..", details: list});
+    //     }
+    // }
     if(req.method==="POST"){
         connectDB();
         const {title, description}= req.body;

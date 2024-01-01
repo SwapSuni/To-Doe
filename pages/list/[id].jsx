@@ -2,26 +2,25 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Head from 'next/head';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 
-export async function getServerSideProps(ctx) {
-    const res = await fetch(`${process.env.BASE_URL}/api/list/${ctx.query.id}`);
-    const data = await res.json();
-    return {
-        props: {
-            tasks: data.details,
-        }
-    }
-}
-
-const List = ({ tasks }) => {
+const List = () => {
     const [add, setAdd] = useState(false);
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
+    const [tasks, setTasks] = useState([]);
 
     const router = useRouter();
 
+    const [user] = useAuthState(auth);
+    // console.log(user.email);
+
     useEffect(() => {
-        setAdd(true);
+        if(add){
+            setAdd(!add);
+        }
+        setAdd(false);
     }, [])
 
     const handlelogout = () => {
@@ -33,24 +32,37 @@ const List = ({ tasks }) => {
     }
 
     const handlenew = async () => {
-        // console.log(router.query.id);
-        const res = await axios.post(`/api/list/${router.query.id}`, {
-            title: title,
-            description: desc,
+        if(title=="" || desc==""){
+            alert("Fill-in the task details");
+        }
+        else{
+            const res = await axios.post(`/api/list/${router.query.id}`, {
+                title: title,
+                description: desc,
+            })
+            // console.log(res)
+            setAdd(true);
+            window.location.reload();
+        }
+    }
+
+    const handledelete = async (itemId) => {
+        console.log(itemId);
+        const res = await axios.delete(`/api/list/${router.query.id}`, {
+            data: {
+                id: itemId,
+            }
         })
-        // console.log(res)
+        alert("Your list is just updated")
         setAdd(!add);
         window.location.reload();
     }
 
-    const handledelete= async(itemId)=>{
-        console.log(itemId);
-        const res=await axios.delete(`/api/list/${router.query.id}`,{
-            data:{
-                id: itemId,
-            }
-        })
-        window.location.reload();
+    const handleList = async () => {
+        const res= await axios.get(`http://localhost:3000/api/list/${router.query.id}`)
+        setTasks(res.data);
+        console.log(tasks);
+        setAdd(!add);
     }
 
     return (
@@ -72,11 +84,11 @@ const List = ({ tasks }) => {
                     add ? (
                         tasks.length > 0 ? (tasks.map((e) => {
                             return (
-                                <div className='grid grid-cols-7 m-5 rounded-md border-2 text-slate-100' key={e}>
+                                <div className='grid grid-cols-7 m-5 rounded-md border-2 text-slate-100' key={e._id}>
                                     <div className='col-span-2 border-r px-10 py-8 font-bold text-xl'>Title: {e.title}</div>
                                     <div className='col-span-4 border-r px-10 py-8 font-semibold text-lg'>Description: {e.description}</div>
                                     <div className='col-span-1 py-8'>
-                                        <button className='ml-10 border-none bg-red-500 px-5 py-1 rounded-lg ' onClick={()=>handledelete(e._id)}>Delete</button>
+                                        <button className='ml-10 border-none bg-red-500 px-5 py-1 rounded-lg ' onClick={() => handledelete(e._id)}>Delete</button>
                                     </div>
                                 </div>
                             )
@@ -106,6 +118,9 @@ const List = ({ tasks }) => {
                                     </div>
                                 </div>
                             </div>
+                            <div className='flex justify-center mt-2'>
+                                <button className='underline text-slate-100' onClick={handleList}>View Your To-Doe List</button>
+                            </div>
                         </>
                     )
 
@@ -114,15 +129,5 @@ const List = ({ tasks }) => {
         </div>
     )
 }
-
-// export async function getServerSideProps(ctx) {
-//     const res = await fetch(`${process.env.BASE_URL}/api/list/${ctx.query.id}`);
-//     const data = await res.json();
-//     return {
-//         props: {
-//             tasks: data.details,
-//         }
-//     }
-// }
 
 export default List
