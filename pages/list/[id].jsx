@@ -59,7 +59,7 @@ const List = () => {
     }
 
     const handleList = async () => {
-        const res= await axios.get(`http://localhost:3000/api/list/${router.query.id}`)
+        const res= await axios.get(`${process.env.BASE_URL}/api/list/${router.query.id}`)
         setTasks(res.data);
         console.log(tasks);
         setAdd(!add);
